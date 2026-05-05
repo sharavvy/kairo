@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Демо-сайт ресторана с премиальной подачей: меню, бронь, регистрация, отзывы и контакты." />
+  <title>KAIRO - ресторан</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="Основная навигация">
+      <a class="brand brand-logo" href="#home" aria-label="KAIRO, главная">
+        <img src="assets/logo/kairo-logo.png" alt="KAIRO Restaurant & Kitchen" />
+      </a>
+
+      <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="navMenu">
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#about">О ресторане</a></li>
+        <li><button class="nav-action" type="button" data-modal-open="bookingModal">Бронирование</button></li>
+        <li><a href="#menu">Меню</a></li>
+        <li><a href="#events">Мероприятия</a></li>
+        <li><a href="#reviews">Отзывы</a></li>
+        <li><a href="#contacts">Контакты</a></li>
+      </ul>
+
+      <button class="nav-action nav-action-accent account-entry" type="button" data-modal-open="accountModal">Аккаунт</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-inner">
+        <div class="hero-copy reveal">
+          <h1 class="hero-title">KAIRO</h1>
+          <p class="hero-subtitle">Restaurant & Kitchen</p>
+          <div class="hero-actions">
+            <button class="btn primary" type="button" data-modal-open="bookingModal">Забронировать стол</button>
+            <a class="btn ghost" href="#menu">Смотреть меню</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section split" id="about">
+      <p class="eyebrow section-kicker reveal">О ресторане</p>
+      <div class="section-copy reveal">
+        <h2>Атмосферный ресторан для ужина, встреч и праздников.</h2>
+      </div>
+      <div class="visual-card reveal" aria-label="Интерьер ресторана">
+        <div class="fake-photo photo-main photo-about"></div>
+      </div>
+    </section>
+
+    <section class="section menu-section" id="menu">
+      <div class="section-head reveal">
+        <p class="eyebrow">Меню</p>
+        <h2>Кухня, напитки и специальные предложения</h2>
+        <p>Выберите категорию или воспользуйтесь поиском по названию и описанию блюда.</p>
+      </div>
+
+      <div class="menu-tools reveal">
+        <div class="category-tabs" id="categoryTabs" aria-label="Категории меню"></div>
+        <label class="search-box">
+          <span>Поиск</span>
+          <input id="menuSearch" type="search" placeholder="паста, стейк, десерт" />
+        </label>
+      </div>
+
+      <div class="menu-grid" id="menuGrid" aria-live="polite"></div>
+    </section>
+
+    <section class="section" id="events">
+      <div class="section-head reveal">
+        <p class="eyebrow">Мероприятия</p>
+        <h2>Форматы для компании</h2>
+      </div>
+      <div class="event-grid">
+        <article class="event-card reveal">
+          <div class="event-photo event-one"></div>
+          <p>Private dinner</p>
+          <h3>Закрытый ужин</h3>
+          <span>Отдельная зона, персональное меню и сервис.</span>
+        </article>
+        <article class="event-card reveal">
+          <div class="event-photo event-two"></div>
+          <p>Birthday</p>
+          <h3>День рождения</h3>
+          <span>Музыка, десерты и посадка для компании.</span>
+        </article>
+        <article class="event-card reveal">
+          <div class="event-photo event-three"></div>
+          <p>Banquet</p>
+          <h3>Банкет</h3>
+          <span>Фуршетный формат и помощь администратора.</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="section gallery" aria-label="Галерея ресторана">
+      <div class="gallery-item gallery-interior wide"></div>
+      <div class="gallery-item gallery-kitchen"></div>
+      <div class="gallery-item gallery-hall"></div>
+      <div class="gallery-item gallery-dinner tall"></div>
+    </section>
+
+    <section class="section account" id="reviews">
+      <div class="section-head reveal">
+        <p class="eyebrow">Отзывы</p>
+        <h2>Впечатления гостей</h2>
+        <p>Отзывы обновляются в реальном времени.</p>
+      </div>
+
+      <div class="reviews-carousel reveal" aria-label="Отзывы гостей">
+        <button class="carousel-btn" type="button" data-review-prev aria-label="Предыдущий отзыв">‹</button>
+        <div class="reviews-viewport">
+          <div class="reviews-track" id="reviewsList" aria-live="polite"></div>
+        </div>
+        <button class="carousel-btn" type="button" data-review-next aria-label="Следующий отзыв">›</button>
+      </div>
+      <p class="review-counter" id="reviewCounter" aria-live="polite"></p>
+
+      <div class="review-action reveal">
+        <button class="btn primary" type="button" data-modal-open="reviewModal">Оставить отзыв</button>
+      </div>
+    </section>
+
+    <section class="section admin" id="adminPanel" hidden>
+      <div class="section-head">
+        <p class="eyebrow">Админ-панель</p>
+        <h2>Управление меню и отзывами</h2>
+        <p>Панель видна только после входа под демо-администратором.</p>
+      </div>
+      <div class="admin-grid">
+        <form class="panel" id="dishForm" novalidate>
+          <h3>Добавить блюдо</h3>
+          <label><span>Название</span><input name="title" type="text" minlength="2" required /><small class="error"></small></label>
+          <label>
+            <span>Категория</span>
+            <select name="category" required>
+              <option value="Горячие блюда">Горячие блюда</option>
+              <option value="Закуски">Закуски</option>
+              <option value="Салаты">Салаты</option>
+              <option value="Супы">Супы</option>
+              <option value="Напитки">Напитки</option>
+              <option value="Десерты">Десерты</option>
+              <option value="Специальные предложения">Специальные предложения</option>
+            </select>
+            <small class="error"></small>
+          </label>
+          <label><span>Описание</span><textarea name="description" rows="3" minlength="5" required></textarea><small class="error"></small></label>
+          <label><span>Цена</span><input name="price" type="number" min="1" required /><small class="error"></small></label>
+          <label><span>Фото блюда</span><input name="image" type="text" placeholder="assets/dishes/default.jpg" /><small>Укажите путь к локальному файлу или оставьте пустым.</small></label>
+          <button class="btn primary full" type="submit">Добавить блюдо</button>
+          <p class="form-message" id="dishMessage" role="status"></p>
+        </form>
+        <div class="panel">
+          <h3>Список блюд</h3>
+          <div class="admin-list" id="adminDishList"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contacts-showcase" id="contacts">
+      <div class="contacts-map-band reveal" aria-label="Карта расположения ресторана">
+        <iframe
+          title="Карта: Нижний Новгород, улица Белинского, 9/1"
+          src="https://yandex.ru/map-widget/v1/?ll=43.989907%2C56.307991&mode=whatshere&whatshere%5Bpoint%5D=43.989907%2C56.307991&whatshere%5Bzoom%5D=17&z=17"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen>
+        </iframe>
+        <a class="map-badge" href="https://yandex.ru/maps/?ll=43.989907%2C56.307991&mode=whatshere&whatshere%5Bpoint%5D=43.989907%2C56.307991&whatshere%5Bzoom%5D=17&z=17" target="_blank" rel="noopener">Открыть в Яндекс Картах</a>
+      </div>
+
+      <footer class="footer footer-rich reveal">
+        <div class="footer-brand-col">
+          <a class="footer-brand" href="#home" aria-label="KAIRO, главная">
+            <span class="footer-brand-mark">K</span>
+            <span>
+              <strong>KAIRO</strong>
+              <small>Restaurant & Kitchen</small>
+            </span>
+          </a>
+
+          <div class="footer-socials" aria-label="Социальные сети ресторана">
+            <a class="social-icon telegram" href="https://t.me/kairo_lounge_nn" target="_blank" rel="noopener" aria-label="Telegram">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M20.82 4.61c.32-.13.67.16.59.49l-2.79 13.18c-.06.3-.39.44-.65.29l-4.28-2.54-2.18 2.1c-.22.21-.59.06-.59-.25V14.9l7.07-6.92c.24-.23-.07-.59-.37-.42l-8.5 4.94-3.95-1.31c-.33-.11-.35-.57-.03-.71z" fill="currentColor"/>
+              </svg>
+            </a>
+            <a class="social-icon vk" href="https://vk.com/kairo_lounge_nn" target="_blank" rel="noopener" aria-label="VK">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M4.8 7.3h2.26c.1 0 .19.07.22.17.48 1.5 1.16 2.91 2.06 4.22.16.23.51.12.51-.16V7.53c0-.13.1-.23.23-.23h2.03c.13 0 .23.1.23.23v2.91c0 .3.37.44.57.23.98-1.02 1.8-2.16 2.45-3.43.04-.08.12-.14.21-.14h2.26c.18 0 .3.19.22.35-.8 1.61-1.83 3.08-3.09 4.4-.09.09-.09.23 0 .32 1.36 1.25 2.46 2.67 3.3 4.26.09.17-.03.38-.22.38h-2.48c-.08 0-.16-.04-.2-.11-.64-1.11-1.42-2.12-2.35-3.04-.2-.2-.58-.06-.58.23v2.69c0 .13-.1.23-.23.23h-1.32c-1.49 0-2.92-.55-4.03-1.56-1.65-1.5-2.93-3.89-3.86-7.16-.05-.15.07-.3.22-.3z" fill="currentColor"/>
+              </svg>
+            </a>
+            <a class="social-icon max" href="https://max.ru/" target="_blank" rel="noopener" aria-label="MAX">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M5.25 17.5V6.75h1.9l3.1 4.8 3.1-4.8h1.92V17.5h-1.95v-7.1l-2.72 4.14h-.66L7.2 10.4v7.1H5.25zm11.85 0 3.15-5.44-3.06-5.31h2.2l1.95 3.47 1.93-3.47h2.18l-3.04 5.28 3.15 5.47h-2.21l-2.01-3.62-2.04 3.62H17.1z" fill="currentColor"/>
+              </svg>
+            </a>
+          </div>
+
+          <div class="footer-legal">
+            <p>ООО «КАЙРО»</p>
+            <p>ИНН 5260000000</p>
+            <p>ОГРН 1245200000000</p>
+          </div>
+        </div>
+
+        <div class="footer-main-col">
+          <div class="footer-info-grid">
+            <article class="footer-info-card">
+              <span class="footer-label">Адрес</span>
+              <strong>Нижний Новгород, <br>улица Белинского, 9/1</strong>
+            </article>
+            <article class="footer-info-card">
+              <span class="footer-label">Номер телефона</span>
+              <a href="tel:+78312130001">+7 (831) 213-00-01</a>
+            </article>
+            <article class="footer-info-card">
+              <span class="footer-label">Время работы</span>
+              <strong>ВС-ЧТ с 14:00 до 00:00<br>ПТ-СБ с 14:00 до 05:00</strong>
+            </article>
+          </div>
+        </div>
+
+        <a class="footer-call-btn" href="tel:+78312130001" aria-label="Позвонить в ресторан">
+          <span>☎</span>
+        </a>
+      </footer>
+    </section>
+  </main>
+
+
+
+  <div class="modal" id="reviewModal" role="dialog" aria-modal="true" aria-labelledby="reviewModalTitle" aria-hidden="true">
+    <div class="modal-backdrop" data-modal-close></div>
+    <div class="modal-card review-modal-card panel" role="document">
+      <button class="modal-close" type="button" aria-label="Закрыть окно" data-modal-close>×</button>
+      <p class="eyebrow">Обратная связь</p>
+      <h2 id="reviewModalTitle">Оставить отзыв</h2>
+      <p class="modal-note">Расскажите, что понравилось в ресторане, кухне, сервисе или атмосфере.</p>
+
+      <form id="reviewForm" novalidate>
+        <label>
+          <span>Имя</span>
+          <input name="name" type="text" minlength="2" required placeholder="Ваше имя" />
+          <small class="error"></small>
+        </label>
+        <label>
+          <span>Оценка</span>
+          <select name="rating" required>
+            <option value="">Выберите оценку</option>
+            <option value="5">5 - отлично</option>
+            <option value="4">4 - хорошо</option>
+            <option value="3">3 - нормально</option>
+            <option value="2">2 - плохо</option>
+            <option value="1">1 - очень плохо</option>
+          </select>
+          <small class="error"></small>
+        </label>
+        <label>
+          <span>Отзыв</span>
+          <textarea name="text" rows="5" minlength="5" required placeholder="Напишите впечатление"></textarea>
+          <small class="error"></small>
+        </label>
+        <button class="btn primary full" type="submit">Отправить отзыв</button>
+        <p class="form-message" id="reviewMessage" role="status"></p>
+      </form>
+    </div>
+  </div>
+
+
+  <div class="modal image-lightbox" id="imageLightbox" role="dialog" aria-modal="true" aria-labelledby="imageLightboxTitle" aria-hidden="true">
+    <div class="modal-backdrop" data-modal-close></div>
+    <div class="modal-card image-lightbox-card" role="document">
+      <button class="modal-close" type="button" aria-label="Закрыть фото" data-modal-close>×</button>
+      <img id="imageLightboxImg" src="assets/dishes/default.jpg" alt="Фото блюда" />
+      <div class="image-lightbox-caption">
+        <h2 id="imageLightboxTitle">Фото блюда</h2>
+        <p id="imageLightboxText"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="bookingModal" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle" aria-hidden="true">
+    <div class="modal-backdrop" data-modal-close></div>
+    <div class="modal-card booking-modal-card panel" role="document">
+      <button class="modal-close" type="button" aria-label="Закрыть окно" data-modal-close>×</button>
+      <p class="eyebrow">Бронирование</p>
+      <h2 id="bookingModalTitle">Заявка на стол</h2>
+      <p class="modal-note">Заполните форму, и администратор свяжется с вами для подтверждения времени.</p>
+
+      <form id="bookingForm" novalidate>
+        <label>
+          <span>Дата</span>
+          <input name="date" type="date" required />
+          <small class="error"></small>
+        </label>
+        <label>
+          <span>Время</span>
+          <select name="time" required>
+            <option value="">Выберите время</option>
+            <option>14:00</option>
+            <option>16:00</option>
+            <option>18:00</option>
+            <option>20:00</option>
+            <option>22:00</option>
+            <option>00:00</option>
+          </select>
+          <small class="error"></small>
+        </label>
+        <label>
+          <span>Гости</span>
+          <select name="guests" required>
+            <option value="">Количество гостей</option>
+            <option>2 гостя</option>
+            <option>3 гостя</option>
+            <option>4 гостя</option>
+            <option>5-8 гостей</option>
+            <option>Банкет</option>
+          </select>
+          <small class="error"></small>
+        </label>
+        <label>
+          <span>Имя</span>
+          <input name="name" type="text" minlength="2" required placeholder="Ваше имя" />
+          <small class="error"></small>
+        </label>
+        <label>
+          <span>Телефон</span>
+          <input name="phone" type="tel" required placeholder="+7 999 000-00-00" />
+          <small class="error"></small>
+        </label>
+        <button class="btn primary full" type="submit">Отправить заявку</button>
+        <p class="form-message" id="bookingMessage" role="status"></p>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="accountModal" role="dialog" aria-modal="true" aria-labelledby="accountModalTitle" aria-hidden="true">
+    <div class="modal-backdrop" data-modal-close></div>
+    <div class="modal-card panel" role="document">
+      <button class="modal-close" type="button" aria-label="Закрыть окно" data-modal-close>×</button>
+      <p class="eyebrow">Личный кабинет</p>
+      <h2 id="accountModalTitle">Аккаунт гостя</h2>
+      <p class="modal-note">Войдите или создайте аккаунт, чтобы оставлять отзывы от своего имени.</p>
+
+      <div class="auth-tabs" role="tablist" aria-label="Выбор действия">
+        <button class="auth-tab active" type="button" role="tab" aria-selected="true" data-auth-tab="login">Вход</button>
+        <button class="auth-tab" type="button" role="tab" aria-selected="false" data-auth-tab="register">Регистрация</button>
+      </div>
+
+      <div class="auth-panel active" data-auth-panel="login">
+        <form id="loginForm" novalidate>
+          <label><span>Email</span><input name="email" type="email" autocomplete="email" required /><small class="error"></small></label>
+          <label><span>Пароль</span><input name="password" type="password" autocomplete="current-password" required /><small class="error"></small></label>
+          <button class="btn ghost full" type="submit">Войти</button>
+          <p class="form-message" id="loginMessage" role="status"></p>
+        </form>
+        <div class="current-user" id="currentUser"></div>
+      </div>
+
+      <div class="auth-panel" data-auth-panel="register" hidden>
+        <form id="registerForm" novalidate>
+          <label><span>Имя</span><input name="name" type="text" minlength="2" autocomplete="name" required /><small class="error"></small></label>
+          <label><span>Email</span><input name="email" type="email" autocomplete="email" required /><small class="error"></small></label>
+          <label><span>Пароль</span><input name="password" type="password" minlength="6" autocomplete="new-password" required /><small class="error"></small></label>
+          <label><span>Повтор пароля</span><input name="confirmPassword" type="password" minlength="6" autocomplete="new-password" required /><small class="error"></small></label>
+          <button class="btn primary full" type="submit">Зарегистрироваться</button>
+          <p class="form-message" id="registerMessage" role="status"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
