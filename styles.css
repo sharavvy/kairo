@@ -2508,3 +2508,185 @@ textarea {
     white-space: normal;
   }
 }
+
+
+/* ================================================================
+   Mobile hotfixes: header alignment + footer fit
+   ================================================================ */
+@media (max-width: 760px) {
+  .site-header {
+    overflow: hidden;
+  }
+
+  .nav {
+    min-height: auto;
+    padding-block: 10px;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .brand,
+  .brand-logo {
+    min-width: 0;
+    width: clamp(132px, 34vw, 180px);
+    height: auto;
+    align-self: center;
+  }
+
+  .brand-logo img {
+    width: 100%;
+    height: auto;
+    max-height: 58px;
+    object-fit: contain;
+    object-position: left center;
+  }
+
+  .account-entry,
+  .burger {
+    align-self: center;
+    margin: 0;
+  }
+
+  .account-entry {
+    min-height: 40px;
+    padding-inline: 12px;
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  .burger {
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+  }
+
+  .nav-menu {
+    top: calc(100% + 8px);
+  }
+}
+
+@media (max-width: 620px) {
+  .nav {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 8px;
+  }
+
+  .account-entry {
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+    padding: 0;
+    overflow: hidden;
+    font-size: 0;
+    border-radius: 50%;
+  }
+
+  .account-entry::before {
+    content: "👤";
+    font-size: 18px;
+    line-height: 1;
+  }
+}
+
+@media (max-width: 900px) {
+  .footer-rich {
+    grid-template-columns: 1fr !important;
+    gap: 22px;
+    align-items: start;
+  }
+
+  .footer-brand-col,
+  .footer-main-col,
+  .footer-call-btn {
+    width: 100%;
+    min-width: 0;
+    justify-self: stretch;
+  }
+
+  .footer-main-col {
+    gap: 20px;
+  }
+
+  .footer-nav {
+    justify-content: flex-start;
+    gap: 12px 22px;
+  }
+
+  .footer-info-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  .footer-info-card {
+    padding-right: 0;
+  }
+
+  .footer-info-card strong,
+  .footer-info-card a,
+  .footer-legal p {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .footer-info-card strong,
+  .footer-info-card a {
+    font-size: clamp(16px, 4.6vw, 22px);
+    line-height: 1.35;
+  }
+
+  .footer-call-btn {
+    justify-self: flex-start;
+    align-self: start;
+    margin-top: 4px;
+  }
+}
+
+@media (max-width: 560px) {
+  .footer-rich {
+    width: min(var(--max), calc(100% - 24px));
+    padding-block: 26px 34px;
+  }
+
+  .footer-brand {
+    gap: 12px;
+  }
+
+  .footer-brand-mark {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+  }
+
+  .footer-brand strong {
+    font-size: 22px;
+  }
+
+  .footer-label {
+    font-size: 12px;
+  }
+
+  .footer-info-card strong,
+  .footer-info-card a[href^="tel"] {
+    font-size: 18px;
+    white-space: normal;
+  }
+}
+
+
+/* Modal close icon centering fix */
+.modal-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 0;
+}
+
+.modal-close::before {
+  content: "×";
+  display: block;
+  font-size: 28px;
+  line-height: 1;
+  transform: translateY(-1px);
+}
