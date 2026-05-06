@@ -355,7 +355,19 @@ function readStorage(key, fallback) {
 }
 
 function writeStorage(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch {
+    // Сайт должен работать даже в браузерах, где localStorage недоступен.
+  }
+}
+
+function removeStorage(key) {
+  try {
+    localStorage.removeItem(key);
+  } catch {
+    // Игнорируем: отсутствие localStorage не должно ломать интерфейс.
+  }
 }
 
 function uid(prefix) {
@@ -629,7 +641,7 @@ function updateUserUI() {
       `;
       qs("#logoutBtn")?.addEventListener("click", () => {
         state.currentUser = null;
-        localStorage.removeItem(STORAGE.currentUser);
+        removeStorage(STORAGE.currentUser);
         updateUserUI();
         renderAdminList();
       });
@@ -682,14 +694,18 @@ function setupNavigation() {
     document.body.classList.add("menu-open");
   };
 
-  burger.addEventListener("click", () => {
+  burger.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
     const isOpen = burger.getAttribute("aria-expanded") === "true";
     if (isOpen) closeMenu();
     else openMenu();
   });
 
-  qsa("a, button", menu).forEach((item) => {
-    item.addEventListener("click", closeMenu);
+  menu.addEventListener("click", (event) => {
+    const item = event.target.closest("a, button");
+    if (!item) return;
+    closeMenu();
   });
 
   document.addEventListener("click", (event) => {
@@ -702,9 +718,18 @@ function setupNavigation() {
     if (event.key === "Escape") closeMenu();
   });
 
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 1180) closeMenu();
-  });
+  const desktopQuery = window.matchMedia("(min-width: 1181px)");
+  const handleViewportChange = () => {
+    if (desktopQuery.matches) closeMenu();
+  };
+
+  if (typeof desktopQuery.addEventListener === "function") {
+    desktopQuery.addEventListener("change", handleViewportChange);
+  } else if (typeof desktopQuery.addListener === "function") {
+    desktopQuery.addListener(handleViewportChange);
+  }
+
+  handleViewportChange();
 }
 
 function setupModals() {

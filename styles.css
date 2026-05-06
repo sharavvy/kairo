@@ -2782,3 +2782,204 @@ textarea {
     height: 46px;
   }
 }
+
+
+/* ================================================================
+   V5 definitive header fix
+   - account is no longer a separate header grid item;
+   - account lives inside the burger menu/list;
+   - burger toggle remains clickable and visible.
+   ================================================================ */
+.account-entry,
+.mobile-account-item {
+  display: none !important;
+}
+
+.account-menu-item {
+  display: list-item;
+}
+
+.account-menu-entry {
+  border: 1px solid rgba(217, 169, 77, 0.52);
+  background: rgba(217, 169, 77, 0.12);
+  color: var(--text);
+}
+
+@media (min-width: 1181px) {
+  .nav {
+    grid-template-columns: minmax(220px, 300px) minmax(0, 1fr);
+  }
+
+  .nav-menu {
+    grid-column: 2;
+    justify-self: end;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    max-width: 100%;
+  }
+
+  .account-menu-entry {
+    margin-left: 6px;
+  }
+}
+
+@media (max-width: 1180px) {
+  :root {
+    --header-height: 92px;
+  }
+
+  .site-header {
+    overflow: visible;
+  }
+
+  .nav {
+    width: min(var(--max), calc(100% - (var(--page-gutter) * 2)));
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-auto-rows: auto;
+    min-height: var(--header-height);
+    padding-block: 8px;
+    gap: 12px;
+  }
+
+  .brand,
+  .brand-logo {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+    align-self: center;
+    min-width: 0;
+  }
+
+  .brand-logo {
+    width: clamp(136px, 24vw, 210px);
+    height: 70px;
+  }
+
+  .brand-logo img {
+    width: 100%;
+    height: 100%;
+    max-height: 70px;
+    object-fit: contain;
+    object-position: left center;
+  }
+
+  .burger {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    align-self: center;
+    display: inline-grid !important;
+    place-items: center;
+    width: 50px;
+    min-width: 50px;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: calc(var(--header-height) + 8px);
+    right: var(--page-gutter);
+    left: var(--page-gutter);
+    z-index: 500;
+    display: flex !important;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 8px;
+    width: auto;
+    max-height: calc(100dvh - var(--header-height) - 24px);
+    overflow: auto;
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background: rgba(25, 23, 20, 0.98);
+    box-shadow: var(--shadow);
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px) scale(0.98);
+    transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+    backdrop-filter: blur(18px);
+  }
+
+  .nav-menu.open {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+
+  .nav-menu a,
+  .nav-menu .nav-action,
+  .account-menu-entry {
+    display: flex;
+    width: 100%;
+    min-height: 50px;
+    justify-content: center;
+    border-radius: 16px;
+    font-size: 16px;
+    line-height: 1.15;
+    text-align: center;
+  }
+
+  .account-menu-entry::before,
+  .mobile-account-entry::before {
+    content: none !important;
+  }
+}
+
+@media (max-width: 560px) {
+  :root {
+    --header-height: 84px;
+  }
+
+  .nav {
+    min-height: var(--header-height);
+    padding-block: 7px;
+  }
+
+  .brand-logo {
+    width: clamp(110px, 31vw, 150px);
+    height: 58px;
+  }
+
+  .brand-logo img {
+    max-height: 58px;
+  }
+
+  .burger {
+    width: 48px;
+    min-width: 48px;
+    height: 48px;
+  }
+
+  .nav-menu {
+    top: calc(var(--header-height) + 8px);
+  }
+}
+
+@media (max-width: 360px) {
+  .brand-logo {
+    width: 108px;
+    height: 54px;
+  }
+
+  .burger {
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+  }
+}
+
+/* Ensure the opened mobile menu stretches across the viewport, not content width. */
+@media (max-width: 1180px) {
+  .nav-menu {
+    width: calc(100vw - (var(--page-gutter) * 2)) !important;
+    max-width: none !important;
+    margin: 0 !important;
+    justify-self: stretch !important;
+    box-sizing: border-box;
+  }
+}
