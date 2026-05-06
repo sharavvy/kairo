@@ -676,15 +676,34 @@ function setupNavigation() {
     document.body.classList.remove("menu-open");
   };
 
+  const openMenu = () => {
+    burger.setAttribute("aria-expanded", "true");
+    menu.classList.add("open");
+    document.body.classList.add("menu-open");
+  };
+
   burger.addEventListener("click", () => {
-    const open = burger.getAttribute("aria-expanded") !== "true";
-    burger.setAttribute("aria-expanded", String(open));
-    menu.classList.toggle("open", open);
-    document.body.classList.toggle("menu-open", open);
+    const isOpen = burger.getAttribute("aria-expanded") === "true";
+    if (isOpen) closeMenu();
+    else openMenu();
   });
 
   qsa("a, button", menu).forEach((item) => {
     item.addEventListener("click", closeMenu);
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!menu.classList.contains("open")) return;
+    if (menu.contains(event.target) || burger.contains(event.target)) return;
+    closeMenu();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeMenu();
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 1180) closeMenu();
   });
 }
 
